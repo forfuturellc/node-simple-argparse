@@ -1,0 +1,33 @@
+{
+  "name": "simple-argparse",
+  "version": "0.0.0-alpha.1.0",
+  "description": "Simple Argument parser for Command-line Applications",
+  "homepage": "https://github.com/forfuture-dev/node-simple-argparse",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/forfuture-dev/node-simple-argparse.git"
+  },
+  "bugs": {
+    "url": "https://github.com/forfuture-dev/node-simple-argparse/issues"
+  },
+  "keywords": [
+    "simple",
+    "argparse",
+    "arguments",
+    "command-line"
+  ],
+  "author": "GochoMugo <mugo@forfuture.co.ke>",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "^1.21.5",
+    "should": "^4.0.4"
+  },
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha tests/test.*.js"
+  },
+  "directories": {
+    "test": "tests"
+  }
+}

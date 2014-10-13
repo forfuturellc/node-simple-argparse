@@ -1,0 +1,6 @@
+language: node_js
+node_js:
+  - "0.11"
+  - "0.10"
+# travis will automatically run `npm test`
+# so we dont require to add script value
