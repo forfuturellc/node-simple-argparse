@@ -12,7 +12,7 @@ Simple Argument parser for Command-line Applications
 |------|-----:|
 |Version|0.0.0-alpha.1.0|
 |Node|0.11, 0.10, 0.8, 0.6|
-|Last Updated|12th Oct, 2014|
+|Last Updated|13th Oct, 2014|
 
 
 ## installation
@@ -56,9 +56,9 @@ wish to create more Parsers, you could:
 While instantiating a parser, an output function may be registered with
 the parser other than the default `console.log`
 
-  var myOtherParser = new myParser(function(output) {
-    socket.emit("commandComplete", output);
-  });
+    var myOtherParser = new myParser(function(output) {
+      socket.emit("commandComplete", output);
+    });
 
 A Parser has these methods:
 
