@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-var assert = require("assert");
 var should = require("should");
 var ARG1 = "ARG1";
 var ARG2 = "ARG2";
@@ -14,4 +13,4 @@ require("../index")
     arg2.should.be.equal(ARG2);
   })
   .epilog("An epilog appears at the end")
-  .parse()
+  .parse();
