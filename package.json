@@ -20,13 +20,15 @@
   ],
   "author": "GochoMugo <mugo@forfuture.co.ke>",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "minimist": "1.1.0"
+  },
   "devDependencies": {
     "mocha": "2.0.1",
     "should": "4.4.1"
   },
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha tests/test.*.js"
+    "test": "./node_modules/mocha/bin/mocha test/test.*.js"
   },
   "directories": {
     "test": "tests"
