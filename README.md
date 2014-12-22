@@ -6,7 +6,7 @@ Simple Argument parser for Command-line Applications
 
 ## module information 
 
-[![Build Status](https://travis-ci.org/forfuture-dev/node-simple-argparse.svg)](https://travis-ci.org/forfuture-dev/node-simple-argparse)
+[![Build Status](https://travis-ci.org/forfuture-dev/node-simple-argparse.svg)](https://travis-ci.org/forfuture-dev/node-simple-argparse) [![Dependency Status](https://gemnasium.com/forfuture-dev/node-simple-argparse.svg)](https://gemnasium.com/forfuture-dev/node-simple-argparse)
 
 
 |Aspect|Detail|
