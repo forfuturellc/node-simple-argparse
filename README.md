@@ -19,7 +19,7 @@ Simple Argument parser for Command-line Applications
 ## installation
 
 ```bash
-$ npm install simple-argparse
+⇒ npm install simple-argparse
 ```
 
 ## basic usage
@@ -42,7 +42,7 @@ function startFunc(host, port) {
 _Sample Output_:
 
 ```bash
-$ node Sample.js
+⇒ node Sample.js
 Application Description
 
  help     show this help information
@@ -112,8 +112,9 @@ A Parser has these methods:
 <a name="parsing"></a>
 ## Parsing
 
-All arguments parsed, are processed by [minimist](minimist), and made
-available to the option functions as their `this` argument.
+All arguments parsed by `.parse()` are processed using
+[minimist][minimist], and made available to the __option functions__ as 
+their `this` argument.
 
 An __option function__ refers to the function passed to `.option`.
 Options that are __NOT__ perceived as options by __minimist__ are passed
@@ -129,7 +130,7 @@ require("simple-argparse")
   .option("test", "run tests", function(suite) {
     if (this.verbose) { console.log("--verbose was used"); }
     if (suite) {
-      console.log("will run tests only for " + suite);
+      console.log("will run tests only for: " + suite);
     } else {
       console.log("will run all tests!");
     }
@@ -141,19 +142,19 @@ require("simple-argparse")
 Now running the above script from a terminal:
 
 ```bash
-$ node parse.js test
+⇒ node parse.js test
 will run all tests!
 
-$ node parse.js test someSuite
-will run tests only for someSuite
+⇒ node parse.js test someSuite
+will run tests only for: someSuite
 
-$ node parse.js test someSuite --verbose
+⇒ node parse.js test someSuite --verbose
 --verbose was used
-will run tests only for someSuite
+will run tests only for: someSuite
 
 ```
 
-See [minimist](minimist) for more information on the parsing.
+See [minimist][minimist] for more information on the parsing.
 
 The __option function__ is optional. If it is left out, the option will
 be ignored. This may be useful for commands not yet implemented.
