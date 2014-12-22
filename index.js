@@ -8,10 +8,15 @@
 */
 
 
+// Module imports
+var argv = require("minimist");
+
+
 /**
 * Shifts the process arguments removing the node executable and
 * filepath. leaving the rest or arguments
 * This function is _impure_. It relies on _process.argv_
+* It also has _side_effects_. It manipulates _process.argv_
 */
 function processArgv() {
   var args = process.argv;
@@ -51,7 +56,7 @@ function isString(string) {
 
 
 /**
-* Parser exported
+* Parser class
 * @class
 * @param {Function} stdout - called with visual output
 * @return {Parser}
@@ -109,8 +114,9 @@ var Parser = (function() {
   * @return {Parser} this Parser instance
   */
   Parser.prototype.option = function(command, description, func) {
-    if (!(isFunction(func) && isString(description) && isString(command)))
+    if (!(isFunction(func) && isString(description) && isString(command))) {
       return this;
+    }
     var idx = command.search(/[\[<]/);
     var key = idx < 0 ? command : command.substring(0, idx);
     var tag = idx < 0 ? "" : command.substring(idx);
@@ -145,14 +151,15 @@ var Parser = (function() {
   */
   Parser.prototype.parse = function(cmds) {
     var args = isString(cmds) ? cmds.split(" ") : processArgv();
-    if (args.length === 0) return this.showHelp();
+    if (args.length === 0) { return this.showHelp(); }
     var command = args.shift();
+    args = argv(args);
     if (! this._commands[command]) {
       var output = "INVALID OPTION: " + command;
       output += "\nTry \"help\" for a list of available commands";
       this._out(output);
     } else {
-      this._commands[command].func.apply(null, args);
+      this._commands[command].func.apply(args, args._);
     }
     return this;
   };
@@ -163,13 +170,13 @@ var Parser = (function() {
   */
   Parser.prototype.showHelp = function() {
     var output = "";
-    if (this._name) output += this._name + ": ";
+    if (this._name) { output += this._name + ": "; }
     output += (this._description || "") + "\n\n";
     var commands = [];
-    for (command in this._commands) {
-      commands.push(" "
-        + pad(this._commands[command].repr, this._width)
-        + this._commands[command].description);
+    for (var command in this._commands) {
+      commands.push(" " +
+        pad(this._commands[command].repr, this._width) +
+        this._commands[command].description);
     }
     commands = commands.sort();
     output += commands.join("\n") + "\n";
@@ -183,7 +190,7 @@ var Parser = (function() {
   */
   Parser.prototype.showVersion = function() {
     var info = "";
-    if (this._name) info += this._name + " ";
+    if (this._name) { info += this._name + " "; }
     info += this._version;
     this._out(info); 
   };

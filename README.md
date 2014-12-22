@@ -6,59 +6,68 @@ Simple Argument parser for Command-line Applications
 
 ## module information 
 
-[![Build Status](https://travis-ci.org/forfuture-dev/node-simple-argparse.svg)](https://travis-ci.org/forfuture-dev/node-simple-argparse)
+[![Build Status](https://travis-ci.org/forfuture-dev/node-simple-argparse.svg)](https://travis-ci.org/forfuture-dev/node-simple-argparse) [![Dependency Status](https://gemnasium.com/forfuture-dev/node-simple-argparse.svg)](https://gemnasium.com/forfuture-dev/node-simple-argparse) [![Coverage Status](https://img.shields.io/coveralls/forfuture-dev/node-simple-argparse.svg)](https://coveralls.io/r/forfuture-dev/node-simple-argparse)
+
 
 |Aspect|Detail|
 |------|-----:|
-|Version|0.0.0-alpha.1.0|
+|Version|0.0.0|
 |Node|0.11, 0.10, 0.8, 0.6|
-|Last Updated|13th Oct, 2014|
+|Last Updated|22nd Dec, 2014|
 
 
 ## installation
 
-    $ npm install simple-argparse
-
+```bash
+⇒ npm install simple-argparse
+```
 
 ## basic usage
 
-<a name="sample"></a>
 _Sample.js_:
 
-    require("simple-argparse")
-      .description("Application Description")
-      .version("0.3.0")
-      .option("start", "starts application", startFunc)
-      .epilog("See License at http://opensource.org/licenses/MIT")
-      .parse()
+```js
+require("simple-argparse")
+  .description("Application Description")
+  .version("0.3.0")
+  .option("start", "starts application", startFunc)
+  .epilog("See License at http://opensource.org/licenses/MIT")
+  .parse()
 
-    function startFunc(host, port) {
-      app.listen(port, host);
-    }
+function startFunc(host, port) {
+  app.listen(port, host);
+}
+```
 
 _Sample Output_:
 
-    $ node Sample.js
-    Application Description
+```bash
+⇒ node Sample.js
+Application Description
 
-     help     show this help information
-     start    starts application
-     version  show version information
+ help     show this help information
+ start    starts application
+ version  show version information
 
-    See License at http://opensource.org/licenses/MIT
+See License at http://opensource.org/licenses/MIT
+```
 
 The module exports a new Parser, that can be used immediately. If you
 wish to create more Parsers, you could:
 
-    var Parser = require("simple-argparse").Parser;
-    var myParser = new myParser();
+```js
+var Parser = require("simple-argparse").Parser;
+var myParser = new myParser();
+```
 
 While instantiating a parser, an output function may be registered with
 the parser other than the default `console.log`
 
-    var myOtherParser = new myParser(function(output) {
-      socket.emit("commandComplete", output);
-    });
+```js
+var myOtherParser = new myParser(function(output) {
+  socket.emit("commandComplete", output);
+});
+```
 
 A Parser has these methods:
 
@@ -78,14 +87,7 @@ A Parser has these methods:
     * a string that will be typed by user to fire command
     * any spaces will be replaced by hyphens
   * __description__: information regarding this command
-  * __optionFunction__:(Optional)
-    * Function called when the command is entered by user
-    * Is passed __ALL__ arguments following the command as __strings__
-    * For example, in the sample script [above](#sample):
-        * `$ node Sample.js start localhost 9999`
-        * _localhost_ and _9999_ are passed to the option function for _start_ i.e. `startFunc`
-    * Leaving out this function, makes the parser ignore this option
-    * That may be useful for commands not yet implemented
+  * __optionFunction__:(Optional) See [Parsing](#parsing) below for more information.
 
 *  __parser#epilog(epilog:String)__
    
@@ -104,14 +106,84 @@ A Parser has these methods:
 
 * __parser#showVersion()__
 
-  * similar to __parser#showHelp()__ but only supplies version information
+  * similar to __parser#showHelp()__ but only supplies version information, registered with `.version()`.
+
+
+<a name="parsing"></a>
+## Parsing
+
+All arguments parsed by `.parse()` are processed using
+[minimist][minimist], and made available to the __option functions__ as 
+their `this` argument.
+
+An __option function__ refers to the function passed to `.option`.
+Options that are __NOT__ perceived as options by __minimist__ are passed
+to the function as arguments.
+
+Consider the following example:
+
+__parse.js__:
+
+```js
+require("simple-argparse")
+  .version("0.0.0")
+  .option("test", "run tests", function(suite) {
+    if (this.verbose) { console.log("--verbose was used"); }
+    if (suite) {
+      console.log("will run tests only for: " + suite);
+    } else {
+      console.log("will run all tests!");
+    }
+    // ...
+  })
+  .parse()
+```
+
+Now running the above script from a terminal:
+
+```bash
+⇒ node parse.js test
+will run all tests!
+
+⇒ node parse.js test someSuite
+will run tests only for: someSuite
+
+⇒ node parse.js test someSuite --verbose
+--verbose was used
+will run tests only for: someSuite
+
+```
+
+See [minimist][minimist] for more information on the parsing.
+
+The __option function__ is optional. If it is left out, the option will
+be ignored. This may be useful for commands not yet implemented.
 
 
 ## license
 
-Copyright (c) 2014 Forfuture LLC
+The MIT License (MIT)
 
-Simple-argparse and its source code is issued under the [MIT][mit] license.
+Copyright (c) 2014 Forfuture LLC <we@forfuture.co.ke>
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation the
+rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+sell copies of the Software, and to permit persons to whom the Software
+is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
 
 
-[mit]://https://opensource.org/licenses/MIT
+[minimist]:https://github.com/substack/minimist
