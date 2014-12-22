@@ -1,6 +1,6 @@
 var child_process = require("child_process");
 var fs = require("fs");
-var should = require("should")
+var should = require("should");
 var _parser = require("../index");
 var Parser = _parser.Parser;
 
@@ -141,7 +141,7 @@ describe("Simple Parser", function() {
   });
   it("should allow chaining", function() {
     should(function() {
-     (new Parser).option("name", "desc", function() {})
+     (new Parser()).option("name", "desc", function() {})
       .description("some desc").epilog("some epilog")
       .version("0.22.0");
     }).not.throw();
@@ -180,9 +180,6 @@ describe("Simple Parser", function() {
       setTimeout(start, 0);
     } catch (e) {start();}
     function start() {
-      console.log("Renamed: %s", renamedFile);
-      try {console.log("Exists:  %j", require("./package.json"))
-      } catch (e) {console.log("Not Required");}
       var parser = new Parser(function(out) {
         if (renamedFile) {
           fs.renameSync(origFilename + ".orig", origFilename);
@@ -218,7 +215,7 @@ describe("Argument parsing", function() {
     var parser = new Parser(function(out) {
       out.should.containEql(desc);
     });
-    parser.description(desc).showHelp()
+    parser.description(desc).showHelp();
     parser.option(name, "blah", function(someArg, anotherArg) {
       someArg.should.equal(arg1);
       anotherArg.should.equal(arg2);

@@ -8,57 +8,67 @@ Simple Argument parser for Command-line Applications
 
 [![Build Status](https://travis-ci.org/forfuture-dev/node-simple-argparse.svg)](https://travis-ci.org/forfuture-dev/node-simple-argparse)
 
+
 |Aspect|Detail|
 |------|-----:|
-|Version|0.0.0-alpha.1.0|
+|Version|0.0.0-alpha.1.1|
 |Node|0.11, 0.10, 0.8, 0.6|
-|Last Updated|13th Oct, 2014|
+|Last Updated|22nd Dec, 2014|
 
 
 ## installation
 
-    $ npm install simple-argparse
-
+```bash
+$ npm install simple-argparse
+```
 
 ## basic usage
 
 <a name="sample"></a>
 _Sample.js_:
 
-    require("simple-argparse")
-      .description("Application Description")
-      .version("0.3.0")
-      .option("start", "starts application", startFunc)
-      .epilog("See License at http://opensource.org/licenses/MIT")
-      .parse()
+```js
+require("simple-argparse")
+  .description("Application Description")
+  .version("0.3.0")
+  .option("start", "starts application", startFunc)
+  .epilog("See License at http://opensource.org/licenses/MIT")
+  .parse()
 
-    function startFunc(host, port) {
-      app.listen(port, host);
-    }
+function startFunc(host, port) {
+  app.listen(port, host);
+}
+```
 
 _Sample Output_:
 
-    $ node Sample.js
-    Application Description
+```bash
+$ node Sample.js
+Application Description
 
-     help     show this help information
-     start    starts application
-     version  show version information
+ help     show this help information
+ start    starts application
+ version  show version information
 
-    See License at http://opensource.org/licenses/MIT
+See License at http://opensource.org/licenses/MIT
+```
 
 The module exports a new Parser, that can be used immediately. If you
 wish to create more Parsers, you could:
 
-    var Parser = require("simple-argparse").Parser;
-    var myParser = new myParser();
+```js
+var Parser = require("simple-argparse").Parser;
+var myParser = new myParser();
+```
 
 While instantiating a parser, an output function may be registered with
 the parser other than the default `console.log`
 
-    var myOtherParser = new myParser(function(output) {
-      socket.emit("commandComplete", output);
-    });
+```js
+var myOtherParser = new myParser(function(output) {
+  socket.emit("commandComplete", output);
+});
+```
 
 A Parser has these methods:
 
@@ -109,7 +119,7 @@ A Parser has these methods:
 
 ## license
 
-Copyright (c) 2014 Forfuture LLC
+Copyright (c) 2014 Forfuture LLC <we@forfuture.co.ke>
 
 Simple-argparse and its source code is issued under the [MIT][mit] license.
 
