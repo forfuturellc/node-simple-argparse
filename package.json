@@ -6,10 +6,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/forfuture-dev/node-simple-argparse.git"
+    "url": "https://github.com/forfutureLLC/node-simple-argparse.git"
   },
   "bugs": {
-    "url": "https://github.com/forfuture-dev/node-simple-argparse/issues"
+    "url": "https://github.com/forfutureLLC/node-simple-argparse/issues"
   },
   "keywords": [
     "simple",
@@ -32,6 +32,9 @@
     "test": "./node_modules/mocha/bin/mocha test/test.*.js"
   },
   "directories": {
-    "test": "tests"
+    "test": "test"
+  },
+  "engines": {
+    "node": ">= 0.6.0"
   }
 }
