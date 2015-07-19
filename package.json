@@ -21,16 +21,16 @@
   "author": "GochoMugo <mugo@forfuture.co.ke>",
   "main": "index.js",
   "dependencies": {
-    "minimist": "^1.1.1"
+    "minimist": "1.1.1"
   },
   "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-cli": "^0.1.13",
-    "grunt-eslint": "^14.0.0",
-    "grunt-mocha-test": "^0.12.7",
-    "istanbul": "^0.3.17",
-    "load-grunt-tasks": "^3.2.0",
-    "should": "^7.0.1"
+    "grunt": "0.4.5",
+    "grunt-cli": "0.1.13",
+    "grunt-eslint": "16.0.0",
+    "grunt-mocha-test": "0.12.7",
+    "istanbul": "0.3.17",
+    "load-grunt-tasks": "3.2.0",
+    "should": "7.0.2"
   },
   "scripts": {
     "test": "grunt test"
