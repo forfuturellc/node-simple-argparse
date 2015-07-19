@@ -3,7 +3,7 @@
 
 > Simple Argument parser for Command-line Applications
 
-[![node](https://img.shields.io/node/v/node-simple-argparse.svg?style=flat-square)](https://www.npmjs.com/package/simple-argparse) [![npm](https://img.shields.io/npm/v/simple-argparse.svg?style=flat-square)](https://www.npmjs.com/package/simple-argparse) [![Travis](https://img.shields.io/travis/forfutureLLC/node-simple-argparse.svg?style=flat-square)](https://travis-ci.org/forfutureLLC/node-simple-argparse) [![Gemnasium](https://img.shields.io/gemnasium/forfutureLLC/node-simple-argparse.svg?style=flat-square)](https://gemnasium.com/forfutureLLC/node-simple-argparse) [![Coveralls](https://img.shields.io/coveralls/forfutureLLC/node-simple-argparse.svg?style=flat-square)](https://coveralls.io/github/forfutureLLC/node-simple-argparse?branch=master)
+[![node](https://img.shields.io/node/v/simple-argparse.svg?style=flat-square)](https://www.npmjs.com/package/simple-argparse) [![npm](https://img.shields.io/npm/v/simple-argparse.svg?style=flat-square)](https://www.npmjs.com/package/simple-argparse) [![Travis](https://img.shields.io/travis/forfutureLLC/node-simple-argparse.svg?style=flat-square)](https://travis-ci.org/forfutureLLC/node-simple-argparse) [![Gemnasium](https://img.shields.io/gemnasium/forfutureLLC/node-simple-argparse.svg?style=flat-square)](https://gemnasium.com/forfutureLLC/node-simple-argparse) [![Coveralls](https://img.shields.io/coveralls/forfutureLLC/node-simple-argparse.svg?style=flat-square)](https://coveralls.io/github/forfutureLLC/node-simple-argparse?branch=master)
 
 
 ## installation
