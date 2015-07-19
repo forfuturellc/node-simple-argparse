@@ -33,7 +33,7 @@
     "should": "^7.0.1"
   },
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha test/test.*.js"
+    "test": "grunt test"
   },
   "directories": {
     "test": "test"
