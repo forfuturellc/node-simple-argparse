@@ -1,0 +1,9 @@
+{
+    "env": {
+        "node": true
+    },
+    "rules": {
+        "comma-dangle": [2, "always-multiline"],
+        "no-shadow": [2, { "hoist": "never" }]
+    }
+}
