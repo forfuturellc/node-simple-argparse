@@ -191,14 +191,14 @@ Parser.prototype.showHelp = function() {
   output += (this._description || "") + "\n\n";
   var commands = [];
   for (var command in this._commands) {
-    commands.push(" " +
+    commands.push("     " +
       pad(this._commands[command].repr, this._width) +
       this._commands[command].description);
   }
   commands = commands.sort();
   output += commands.join("\n") + "\n";
   if (this._epilog) {
-    output += "\n" + this._epilog;
+    output += "\n " + this._epilog;
   }
   this._out(output);
 };
