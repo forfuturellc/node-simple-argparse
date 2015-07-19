@@ -4,6 +4,7 @@
     },
     "rules": {
         "comma-dangle": [2, "always-multiline"],
-        "no-shadow": [2, { "hoist": "never" }]
+        "no-shadow": [2, { "hoist": "never" }],
+        "no-underscore-dangle": [0]
     }
 }
