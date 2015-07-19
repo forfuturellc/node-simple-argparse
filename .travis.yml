@@ -1,8 +1,18 @@
 language: node_js
 node_js:
-  - "0.11"
-  - "0.10"
-  - "0.8"
-  - "0.6"
-script: "npm test"
-after_script: "NODE_ENV=test npm install coveralls mocha-lcov-reporter && ./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+- '0.12'
+- '0.11'
+- '0.10'
+script: npm test
+after_script: NODE_ENV=test npm install coveralls mocha-lcov-reporter && ./node_modules/.bin/istanbul
+  cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info
+  | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
+deploy:
+  provider: npm
+  email: mugo@forfuture.co.ke
+  api_key:
+    secure: EB30BFfWeRSaLWo1epmaW5CwGCHCrUzfuLZys0of4hKaWCdepxNlVhPShxTpMsNwxKerhKslNhyyedmJ0e/WHdb4RdjeSRzWOTH8te0x1EKPclUSUop/TfJSYZedQfvZFHf3Ma0o4pLhOBlHAJc+Zpes+92n3fn9TmnVSRa5iqA=
+  on:
+    tags: true
+    repo: forfutureLLC/node-simple-argparse
+    branch: master
