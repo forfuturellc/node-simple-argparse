@@ -1,6 +1,6 @@
 {
   "name": "simple-argparse",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Simple Argument parser for Command-line Applications",
   "homepage": "https://github.com/forfuture-dev/node-simple-argparse",
   "license": "MIT",
