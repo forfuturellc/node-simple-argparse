@@ -81,6 +81,10 @@ A `Parser` has these methods:
   * __description__: help information regarding this command
   * __optionFunction__:(Optional) See [Parsing](#parsing) below for more information.
 
+* __Parser#defaultOption([optionFunction:Fucntion])__
+
+  * __optionFunction__: (Optional) default function to run rather than show help information. See [Parsing](#parsing) below for more information.
+
 *  __Parser#epilog(epilog:String)__
 
   * __epilog__: a string that will appear at the bottom of the help information
@@ -114,6 +118,8 @@ to the function as `arguments`.
 
 The option name, as inputted by the user, is made available to the function at `this._option`.
 
+**Note** that for the default option (`.defaultOption(func)`) no `arguments` can be passed to the option function. Also `this._option` will always equal `"default"`.
+
 Consider the following example:
 
 __parse.js__:
@@ -126,22 +132,39 @@ require("simple-argparse")
     console.log("this.verbose === %s", this.verbose);
     console.log("suite === %s", suite);
   })
+  .defaultOption(function() {
+    console.log("this._option === %s", this._option);
+    console.log("this.verbose === %s", this.verbose);
+  })
   .parse();
 ```
 
 Now running the above script from a terminal:
 
 ```bash
+# default command
+⇒ node parse.js
+this._option === default
+this.verbose === undefined
+
+# default command
+⇒ node parse.js --verbose
+this._option === default
+this.verbose === true
+
+# test command
 ⇒ node parse.js test
 this._option === test
 this.verbose === undefined
 suite === undefined
 
+# test command
 ⇒ node parse.js test someSuite
 this._option === test
 this.verbose === undefined
 suite === someSuite
 
+# test command
 ⇒ node parse.js test someSuite --verbose
 this._option === test
 this.verbose === true
