@@ -81,7 +81,7 @@ A `Parser` has these methods:
   * __description__: help information regarding this command
   * __optionFunction__:(Optional) See [Parsing](#parsing) below for more information.
 
-* __Parser#defaultOption([optionFunction:Fucntion])__
+* __Parser#defaultOption([optionFunction:Function])__
 
   * __optionFunction__: (Optional) default function to run rather than show help information. See [Parsing](#parsing) below for more information.
 
