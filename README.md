@@ -81,6 +81,10 @@ A `Parser` has these methods:
   * __description__: help information regarding this command
   * __optionFunction__:(Optional) See [Parsing](#parsing) below for more information.
 
+* __Parser#defaultOption([optionFunction:Function])__
+
+  * __optionFunction__: (Optional) default function to run rather than show help information. See [Parsing](#parsing) below for more information.
+
 *  __Parser#epilog(epilog:String)__
 
   * __epilog__: a string that will appear at the bottom of the help information
@@ -109,8 +113,12 @@ All arguments parsed by `.parse()` are processed using
 their `this` argument.
 
 An __option function__ refers to the function passed to `.option`.
-Options that are __NOT__ perceived as options by __minimist__ are passed
+Options that are __NOT__ perceived as options/flags by __minimist__ are passed
 to the function as `arguments`.
+
+The option name, as inputted by the user, is made available to the function at `this._option`.
+
+**Note** that for the default option (`.defaultOption(func)`) no `arguments` can be passed to the option function. Also `this._option` will always equal `"default"`.
 
 Consider the following example:
 
@@ -120,13 +128,13 @@ __parse.js__:
 require("simple-argparse")
   .version("0.0.0")
   .option("test", "run tests", function(suite) {
-    if (this.verbose) { console.log("--verbose was used"); }
-    if (suite) {
-      console.log("will run tests only for: " + suite);
-    } else {
-      console.log("will run all tests!");
-    }
-    // ...
+    console.log("this._option === %s", this._option);
+    console.log("this.verbose === %s", this.verbose);
+    console.log("suite === %s", suite);
+  })
+  .defaultOption(function() {
+    console.log("this._option === %s", this._option);
+    console.log("this.verbose === %s", this.verbose);
   })
   .parse();
 ```
@@ -134,15 +142,33 @@ require("simple-argparse")
 Now running the above script from a terminal:
 
 ```bash
+# default command
+⇒ node parse.js
+this._option === default
+this.verbose === undefined
+
+# default command
+⇒ node parse.js --verbose
+this._option === default
+this.verbose === true
+
+# test command
 ⇒ node parse.js test
-will run all tests!
+this._option === test
+this.verbose === undefined
+suite === undefined
 
+# test command
 ⇒ node parse.js test someSuite
-will run tests only for: someSuite
+this._option === test
+this.verbose === undefined
+suite === someSuite
 
+# test command
 ⇒ node parse.js test someSuite --verbose
---verbose was used
-will run tests only for: someSuite
+this._option === test
+this.verbose === true
+suite === someSuite
 
 ```
 

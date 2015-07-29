@@ -78,6 +78,7 @@ function Parser(stdout) {
   this._version = "0.0.0";
   this._epilog = null;
   this._commands = { };
+  this._default = this.showHelp;
   this._width = 0;
   this._out = isFunction(stdout) ? stdout : console.log;
   this.option("help", "show this help information", this.showHelp.bind(this));
@@ -146,6 +147,18 @@ Parser.prototype.option = function(command, description, func) {
 
 
 /**
+ * Adds the default function to run if no command is specified
+ * @param  {Function} func
+ */
+Parser.prototype.defaultOption = function defaultOption(func) {
+  if (func) {
+    this._default = func;
+  }
+  return this;
+};
+
+
+/**
  * Adds a bottom epilog
  * @param  {String} epilog
  * @return {Parser} this Parser instance
@@ -163,17 +176,21 @@ Parser.prototype.epilog = function(epilog) {
  */
 Parser.prototype.parse = function(cmds) {
   var args = isString(cmds) ? cmds.split(" ") : processArgv();
-  if (args.length === 0) {
-    return this.showHelp();
-  }
-  var command = args.shift();
-  args = argv(args);
-  if (!this._commands[command]) {
+  var context = { };
+  var command = args[0];
+  if (command === undefined || command[0] === "-") {
+    context = argv(args);
+    context._option = "default";
+    this._default.apply(context, []);
+  } else if (this._commands[command]) {
+    var option = args.shift();
+    context = argv(args);
+    context._option = option;
+    this._commands[command].func.apply(context, context._);
+  } else {
     var output = "INVALID OPTION: " + command;
     output += "\nTry \"help\" for a list of available commands";
     this._out(output);
-  } else {
-    this._commands[command].func.apply(args, args._);
   }
   return this;
 };

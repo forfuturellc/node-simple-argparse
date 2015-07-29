@@ -188,6 +188,7 @@ describe("Parser", function() {
       .description("some desc")
       .epilog("some epilog")
       .version("0.22.0")
+      .defaultOption()
       .option("ian")
       .option("robot", "call")
       .option("gun", "fight", function() { });
@@ -243,5 +244,22 @@ describe("Argument parsing", function() {
       arg2.should.eql("arg2");
       done();
     }).parse("test --name=gocho arg1 arg2");
+  });
+
+  it("should make available the option name", function(done) {
+    var parser = new Parser(function() { });
+    parser.option("test", "some test", function() {
+      should(this._option).eql("test");
+      done();
+    }).parse("test");
+  });
+
+  it("should call the default function if specified", function(done) {
+    var parser = new Parser(function() { });
+    parser.defaultOption(function() {
+      should(this._option).eql("default");
+      should(this.verbose).eql(true);
+      done();
+    }).parse("--verbose");
   });
 });

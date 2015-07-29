@@ -1,6 +1,6 @@
 {
   "name": "simple-argparse",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Simple Argument parser for Command-line Applications",
   "homepage": "https://github.com/forfuture-dev/node-simple-argparse",
   "license": "MIT",
@@ -24,16 +24,19 @@
     "minimist": "^1.1.1"
   },
   "devDependencies": {
+    "coveralls": "^2.11.3",
     "grunt": "^0.4.5",
     "grunt-cli": "^0.1.13",
     "grunt-eslint": "^16.0.0",
     "grunt-mocha-test": "^0.12.7",
     "istanbul": "^0.3.17",
     "load-grunt-tasks": "^3.2.0",
+    "mocha-lcov-reporter": "^0.0.2",
     "should": "^7.0.2"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt test",
+    "test-coverage": "istanbul cover _mocha --report lcovonly -- -R spec test/test.*.js"
   },
   "directories": {
     "test": "test"
