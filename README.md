@@ -109,8 +109,10 @@ All arguments parsed by `.parse()` are processed using
 their `this` argument.
 
 An __option function__ refers to the function passed to `.option`.
-Options that are __NOT__ perceived as options by __minimist__ are passed
+Options that are __NOT__ perceived as options/flags by __minimist__ are passed
 to the function as `arguments`.
+
+The option name, as inputted by the user, is made available to the function at `this._option`.
 
 Consider the following example:
 
@@ -120,13 +122,9 @@ __parse.js__:
 require("simple-argparse")
   .version("0.0.0")
   .option("test", "run tests", function(suite) {
-    if (this.verbose) { console.log("--verbose was used"); }
-    if (suite) {
-      console.log("will run tests only for: " + suite);
-    } else {
-      console.log("will run all tests!");
-    }
-    // ...
+    console.log("this._option === %s", this._option);
+    console.log("this.verbose === %s", this.verbose);
+    console.log("suite === %s", suite);
   })
   .parse();
 ```
@@ -135,14 +133,19 @@ Now running the above script from a terminal:
 
 ```bash
 ⇒ node parse.js test
-will run all tests!
+this._option === test
+this.verbose === undefined
+suite === undefined
 
 ⇒ node parse.js test someSuite
-will run tests only for: someSuite
+this._option === test
+this.verbose === undefined
+suite === someSuite
 
 ⇒ node parse.js test someSuite --verbose
---verbose was used
-will run tests only for: someSuite
+this._option === test
+this.verbose === true
+suite === someSuite
 
 ```
 

@@ -244,4 +244,12 @@ describe("Argument parsing", function() {
       done();
     }).parse("test --name=gocho arg1 arg2");
   });
+
+  it("should make available the option name", function(done) {
+    var parser = new Parser(function() { });
+    parser.option("test", "some test", function() {
+      should(this._option).eql("test");
+      done();
+    }).parse("test");
+  });
 });

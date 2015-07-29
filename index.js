@@ -167,12 +167,13 @@ Parser.prototype.parse = function(cmds) {
     return this.showHelp();
   }
   var command = args.shift();
-  args = argv(args);
   if (!this._commands[command]) {
     var output = "INVALID OPTION: " + command;
     output += "\nTry \"help\" for a list of available commands";
     this._out(output);
   } else {
+    args = argv(args);
+    args._option = command;
     this._commands[command].func.apply(args, args._);
   }
   return this;
