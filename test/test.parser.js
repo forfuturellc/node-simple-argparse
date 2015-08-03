@@ -202,6 +202,14 @@ describe("Parser", function() {
     });
     parser.showHelp();
   });
+
+  it("show help information as the default option", function(done) {
+    new Parser(function(out) {
+      out.should.containEql("just simple");
+      done();
+    }).option("simple", "just simple", function() { })
+    .parse("");
+  });
 });
 
 

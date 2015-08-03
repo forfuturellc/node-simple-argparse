@@ -1,8 +1,8 @@
 {
   "name": "simple-argparse",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Simple Argument parser for Command-line Applications",
-  "homepage": "https://github.com/forfuture-dev/node-simple-argparse",
+  "homepage": "https://github.com/forfutureLLC/node-simple-argparse",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
   "author": "GochoMugo <mugo@forfuture.co.ke>",
   "main": "index.js",
   "dependencies": {
-    "minimist": "^1.1.1"
+    "minimist": "^1.1.2"
   },
   "devDependencies": {
     "coveralls": "^2.11.3",
