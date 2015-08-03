@@ -78,7 +78,7 @@ function Parser(stdout) {
   this._version = "0.0.0";
   this._epilog = null;
   this._commands = { };
-  this._default = this.showHelp;
+  this._default = this.showHelp.bind(this);
   this._width = 0;
   this._out = isFunction(stdout) ? stdout : console.log;
   this.option("help", "show this help information", this.showHelp.bind(this));
@@ -178,7 +178,7 @@ Parser.prototype.parse = function(cmds) {
   var args = isString(cmds) ? cmds.split(" ") : processArgv();
   var context = { };
   var command = args[0];
-  if (command === undefined || command[0] === "-") {
+  if (command === undefined || command === "" || command[0] === "-") {
     context = argv(args);
     context._option = "default";
     this._default.apply(context, []);
