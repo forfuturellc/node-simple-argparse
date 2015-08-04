@@ -184,10 +184,12 @@ describe("Parser", function() {
 
   it("should allow chaining", function() {
     should(function() {
-     (new Parser())
+     (new Parser(function() { }))
       .description("some desc")
       .epilog("some epilog")
       .version("0.22.0")
+      .showHelp()
+      .showVersion()
       .defaultOption()
       .option("ian")
       .option("robot", "call")
@@ -209,6 +211,14 @@ describe("Parser", function() {
       done();
     }).option("simple", "just simple", function() { })
     .parse("");
+  });
+
+  it("allows short command names", function(done) {
+    new Parser(function(out) {
+      out.should.containEql("rg");
+    }).option("rg", "rigger", function() {
+      done();
+    }).showHelp().parse("rg");
   });
 });
 

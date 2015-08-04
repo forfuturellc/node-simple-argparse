@@ -78,11 +78,12 @@ function Parser(stdout) {
   this._version = "0.0.0";
   this._epilog = null;
   this._commands = { };
+  this._short = { };
   this._default = this.showHelp.bind(this);
   this._width = 0;
   this._out = isFunction(stdout) ? stdout : console.log;
-  this.option("help", "show this help information", this.showHelp.bind(this));
-  this.option("version", "show version information", this.showVersion.bind(this));
+  this.option("H", "help", "show this help information", this.showHelp.bind(this));
+  this.option("V", "version", "show version information", this.showVersion.bind(this));
   return this;
 }
 
@@ -93,7 +94,7 @@ function Parser(stdout) {
  * @param  {String} text
  * @return {Parser} this Parser Instance
  */
-Parser.prototype.description = function(name, text) {
+Parser.prototype.description = function description(name, text) {
   if (!text) {
     this._description = name;
   } else {
@@ -106,23 +107,30 @@ Parser.prototype.description = function(name, text) {
 
 /**
  * Adds Version information
- * @param  {String} version
+ * @param  {String} versionNum
  * @return {Parser} this Parser instance
  */
-Parser.prototype.version = function(version) {
-  this._version = version;
+Parser.prototype.version = function version(versionNum) {
+  this._version = versionNum;
   return this;
 };
 
 
 /**
-* Adds an option/command
-* @param  {String} command
-* @param  {String} description
-* @param  {Function} [func]
-* @return {Parser} this Parser instance
-*/
-Parser.prototype.option = function(command, description, func) {
+ * Adds an option/command
+ * @param  {String} [alias]
+ * @param  {String} command
+ * @param  {String} description
+ * @param  {Function} [func]
+ * @return {Parser} this Parser instance
+ */
+Parser.prototype.option = function option(alias, command, description, func) {
+  if ((!func) && alias && command && isFunction(description)) {
+    func = description;
+    description = command;
+    command = alias;
+    alias = undefined;
+  }
   if (!(isFunction(func) && isString(description) && isString(command))) {
     return this;
   }
@@ -133,6 +141,10 @@ Parser.prototype.option = function(command, description, func) {
   key = key.replace(" ", "-");
   tag = tag.trim();
   command = key + " " + tag;
+  if (alias) {
+    this._short[alias] = key;
+    command = alias + ", " + command;
+  }
   this._commands[key] = {
     description: description.trim(),
     func: func,
@@ -174,7 +186,7 @@ Parser.prototype.epilog = function(epilog) {
  * @param  {String} commandString
  * @return {Parser} this Parser instance
  */
-Parser.prototype.parse = function(cmds) {
+Parser.prototype.parse = function parse(cmds) {
   var args = isString(cmds) ? cmds.split(" ") : processArgv();
   var context = { };
   var command = args[0];
@@ -182,11 +194,12 @@ Parser.prototype.parse = function(cmds) {
     context = argv(args);
     context._option = "default";
     this._default.apply(context, []);
-  } else if (this._commands[command]) {
+  } else if (this._commands[command] || this._short[command]) {
+    var target = this._commands[command] || this._commands[this._short[command]];
     var option = args.shift();
     context = argv(args);
     context._option = option;
-    this._commands[command].func.apply(context, context._);
+    target.func.apply(context, context._);
   } else {
     var output = "INVALID OPTION: " + command;
     output += "\nTry \"help\" for a list of available commands";
@@ -200,7 +213,7 @@ Parser.prototype.parse = function(cmds) {
  * Show help: name, description, options and epilog strings are
  * passed to the output function
  */
-Parser.prototype.showHelp = function() {
+Parser.prototype.showHelp = function showHelp() {
   var output = " ";
   if (this._name) {
     output += this._name + ": ";
@@ -218,6 +231,7 @@ Parser.prototype.showHelp = function() {
     output += "\n " + this._epilog;
   }
   this._out(output);
+  return this;
 };
 
 
@@ -225,13 +239,14 @@ Parser.prototype.showHelp = function() {
  * Show version: name and version strings are passed to the output
  * function
  */
-Parser.prototype.showVersion = function() {
+Parser.prototype.showVersion = function showVersion() {
   var info = "";
   if (this._name) {
     info += this._name + " ";
   }
   info += this._version;
   this._out(info);
+  return this;
 };
 
 
