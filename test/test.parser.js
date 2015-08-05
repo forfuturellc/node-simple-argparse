@@ -192,6 +192,7 @@ describe("Parser", function() {
       .showVersion()
       .defaultOption()
       .option("ian")
+      .prerun()
       .option("robot", "call")
       .option("gun", "fight", function() { });
     }).not.throw();
@@ -219,6 +220,18 @@ describe("Parser", function() {
     }).option("rg", "rigger", function() {
       done();
     }).showHelp().parse("rg");
+  });
+
+  it("allows a pre-run hook that can manipulate args", function(done) {
+    new Parser(function() { })
+    .prerun(function() {
+      should(this.verbose).be.ok();
+      this.verbose = "gazelle";
+    }).option("s", "start", "starting", function() {
+      should(this.verbose).eql("gazelle");
+      done();
+    })
+    .parse("s --verbose");
   });
 });
 

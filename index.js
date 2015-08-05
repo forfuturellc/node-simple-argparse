@@ -80,6 +80,7 @@ function Parser(stdout) {
   this._commands = { };
   this._short = { };
   this._default = this.showHelp.bind(this);
+  this._hooks = { };
   this._width = 0;
   this._out = isFunction(stdout) ? stdout : console.log;
   this.option("H", "help", "show this help information", this.showHelp.bind(this));
@@ -161,10 +162,25 @@ Parser.prototype.option = function option(alias, command, description, func) {
 /**
  * Adds the default function to run if no command is specified
  * @param  {Function} func
+ * @return {Parser} this Parser instance
  */
 Parser.prototype.defaultOption = function defaultOption(func) {
   if (func) {
     this._default = func;
+  }
+  return this;
+};
+
+
+/**
+ * Add a pre-run function
+ *
+ * @param  {Function} func
+ * @return {Parser} this Parser instance
+ */
+Parser.prototype.prerun = function prerun(func) {
+  if (func) {
+    this._hooks.prerun = func;
   }
   return this;
 };
@@ -187,31 +203,39 @@ Parser.prototype.epilog = function(epilog) {
  * @return {Parser} this Parser instance
  */
 Parser.prototype.parse = function parse(cmds) {
+  var me = this;
   var args = isString(cmds) ? cmds.split(" ") : processArgv();
   var context = { };
   var command = args[0];
+  function exec(target, ctx) {
+    if (me._hooks.prerun) {
+      me._hooks.prerun.apply(ctx, ctx._);
+    }
+    target.apply(ctx, ctx._);
+  }
   if (command === undefined || command === "" || command[0] === "-") {
     context = argv(args);
     context._option = "default";
-    this._default.apply(context, []);
-  } else if (this._commands[command] || this._short[command]) {
-    var target = this._commands[command] || this._commands[this._short[command]];
+    exec(me._default, context);
+  } else if (me._commands[command] || me._short[command]) {
+    var target = me._commands[command] || me._commands[me._short[command]];
     var option = args.shift();
     context = argv(args);
     context._option = option;
-    target.func.apply(context, context._);
+    exec(target.func, context);
   } else {
     var output = "INVALID OPTION: " + command;
     output += "\nTry \"help\" for a list of available commands";
-    this._out(output);
+    me._out(output);
   }
-  return this;
+  return me;
 };
 
 
 /**
  * Show help: name, description, options and epilog strings are
  * passed to the output function
+ * @return {Parser} this Parser instance
  */
 Parser.prototype.showHelp = function showHelp() {
   var output = " ";
@@ -238,6 +262,7 @@ Parser.prototype.showHelp = function showHelp() {
 /**
  * Show version: name and version strings are passed to the output
  * function
+ * @return {Parser} this Parser instance
  */
 Parser.prototype.showVersion = function showVersion() {
   var info = "";
