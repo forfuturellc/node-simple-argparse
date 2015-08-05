@@ -184,12 +184,15 @@ describe("Parser", function() {
 
   it("should allow chaining", function() {
     should(function() {
-     (new Parser())
+     (new Parser(function() { }))
       .description("some desc")
       .epilog("some epilog")
       .version("0.22.0")
+      .showHelp()
+      .showVersion()
       .defaultOption()
       .option("ian")
+      .prerun()
       .option("robot", "call")
       .option("gun", "fight", function() { });
     }).not.throw();
@@ -209,6 +212,26 @@ describe("Parser", function() {
       done();
     }).option("simple", "just simple", function() { })
     .parse("");
+  });
+
+  it("allows short command names", function(done) {
+    new Parser(function(out) {
+      out.should.containEql("rg");
+    }).option("rg", "rigger", function() {
+      done();
+    }).showHelp().parse("rg");
+  });
+
+  it("allows a pre-run hook that can manipulate args", function(done) {
+    new Parser(function() { })
+    .prerun(function() {
+      should(this.verbose).be.ok();
+      this.verbose = "gazelle";
+    }).option("s", "start", "starting", function() {
+      should(this.verbose).eql("gazelle");
+      done();
+    })
+    .parse("s --verbose");
   });
 });
 

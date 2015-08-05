@@ -21,7 +21,7 @@ _sample.js_:
 require("simple-argparse")
   .description("Application Description")
   .version("0.3.0")
-  .option("start", "starts application", startFunc)
+  .option("s", "start", "starts application", startFunc)
   .epilog("See License at http://opensource.org/licenses/MIT")
   .parse();
 
@@ -36,9 +36,9 @@ _sample output_:
 ⇒ node Sample.js
  Application Description
 
-    help     show this help information
-    start    starts application
-    version  show version information
+    H, help     show this help information
+    s, start    starts application
+    V, version  show version information
 
  See License at http://opensource.org/licenses/MIT
 ```
@@ -73,8 +73,9 @@ A `Parser` has these methods:
 
   * __version__: provides version information of your Application. Defaults to `"0.0.0"`
 
-*  __Parser#option(command:String, description:String [, optionFunction:Function])__
+*  __Parser#option([short:String ,] command:String, description:String [, optionFunction:Function])__
 
+  * __short__: (Optional) short string, preferably one or two letter string that can be used in place of the __command__.
   * __command__:
     * a string that will be typed by user to fire the command
     * any spaces will be replaced by hyphens
@@ -84,6 +85,10 @@ A `Parser` has these methods:
 * __Parser#defaultOption([optionFunction:Function])__
 
   * __optionFunction__: (Optional) default function to run rather than show help information. See [Parsing](#parsing) below for more information.
+
+* __Parser#prerun([hookFunction:Function])__
+
+  * __hookFunction__: (Optional) function to run before any of the option functions. This function can manipulate the arguments passed to the option functions by using the `this` context.
 
 *  __Parser#epilog(epilog:String)__
 
