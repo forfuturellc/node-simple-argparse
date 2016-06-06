@@ -7,6 +7,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+### 1.0.0 - 2016-06-06
+
 Added:
 
 * Allow passing an `Array` of arguments to `Parser#parse()`
