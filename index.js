@@ -23,9 +23,7 @@ var argv = require("yargs-parser");
  * @return {Array} arguments
  */
 function processArgv() {
-  var args = process.argv.slice();
-  args.shift(); // node
-  args.shift(); // filename/command-name
+  var args = process.argv.slice(2);
   return args;
 }
 
@@ -56,13 +54,24 @@ function isFunction(variable) {
 
 
 /**
- * Returns `true` if `variable` is a String. Otherwise `false`
+ * Returns `true` if `variable` is a String. Otherwise `false`.
  *
  * @param  {*} variable
  * @return {Boolean}
  */
 function isString(variable) {
   return typeof variable === "string";
+}
+
+
+/**
+ * Returns `true` if `variable` is an Array. Otherwise `false`.
+ *
+ * @param {*} variable
+ * @return {Boolean}
+ */
+function isArray(variable) {
+  return variable instanceof Array;
 }
 
 
@@ -199,12 +208,19 @@ Parser.prototype.epilog = function(epilog) {
 
 /**
  * Parses a string for commands
- * @param  {String} commandString
+ * @param  {String|Array} commandString
  * @return {Parser} this Parser instance
  */
 Parser.prototype.parse = function parse(cmds) {
   var me = this;
-  var args = isString(cmds) ? cmds.split(" ") : processArgv();
+  var args;
+  if (isString(cmds)) {
+    args = cmds.split(" ");
+  } else if (isArray(cmds)) {
+    args = cmds;
+  } else {
+    args = processArgv();
+  }
   var context = { };
   var command = args[0];
   function exec(target, ctx) {

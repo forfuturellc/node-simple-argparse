@@ -98,10 +98,10 @@ A `Parser` has these methods:
 
   * __epilog__: a string that will appear at the bottom of the help information
 
-*  __Parser#parse([arguments:String])__
+*  __Parser#parse([arguments:String|Array])__
 
   * __arguments__:(Optional)
-    * a string representing commands as typed in command-line
+    * a string or array representing options, for example, `"name --key=value"`, `["name", "--key=value"]`
     * if left out, `process.argv` will be used instead
 
 * __Parser#showHelp()__
