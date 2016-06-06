@@ -12,7 +12,7 @@
 
 
 // npm-installed modules
-var argv = require("minimist");
+var argv = require("yargs-parser");
 
 
 /**

@@ -114,7 +114,7 @@ A `Parser` has these methods:
 ## Parsing
 
 All arguments parsed by `.parse()` are processed using
-[minimist][minimist], and made available to the __option functions__ as
+[yargs-parser][argv], and made available to the __option functions__ as
 their `this` argument.
 
 An __option function__ refers to the function passed to `.option`.
@@ -177,7 +177,7 @@ suite === someSuite
 
 ```
 
-See [minimist][minimist] for more information on the parsing.
+See [yargs-parser][argv] for more information on the parsing.
 
 The __option function__ is optional. If it is left out, the option will
 be ignored. This may be useful for commands __not yet implemented__.
@@ -190,4 +190,4 @@ __The MIT License (MIT)__
 Copyright (c) 2014-2015 Forfuture LLC <we@forfuture.co.ke>
 
 
-[minimist]:https://github.com/substack/minimist
+[argv]:https://github.com/yargs/yargs-parser

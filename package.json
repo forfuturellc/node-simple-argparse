@@ -21,7 +21,7 @@
   "author": "GochoMugo <mugo@forfuture.co.ke>",
   "main": "index.js",
   "dependencies": {
-    "minimist": "^1.1.2"
+    "yargs-parser": "^2.4.0"
   },
   "devDependencies": {
     "coveralls": "^2.11.3",
