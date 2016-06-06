@@ -1,11 +1,11 @@
 /*
-| simple-argparse
-| simple argument parser for command line applications
-|
-| Author: GochoMugo <mugo@forfuture.co.ke>
-| Copyright (c) Forfuture LLC <we@forfuture.co.ke>
-| License: MIT
-*/
+ | simple-argparse
+ | simple argument parser for command line applications
+ |
+ | Author: GochoMugo <mugo@forfuture.co.ke>
+ | Copyright (c) Forfuture LLC <we@forfuture.co.ke>
+ | License: MIT
+ */
 
 
 "use strict";
@@ -16,21 +16,19 @@ var argv = require("yargs-parser");
 
 
 /**
- * Shifts the process arguments removing the node executable and
- * filepath. leaving the rest or arguments
- * This function is _impure_. It relies on _process.argv_
+ * Slices the process arguments removing the node executable and
+ * filepath, leaving the rest of the arguments.
+ * This function is _impure_; it relies on _process.argv_
  *
  * @return {Array} arguments
  */
 function processArgv() {
-  var args = process.argv.slice(2);
-  return args;
+  return process.argv.slice(2);
 }
 
 
 /**
- * Wraps padding space around some text, specfically by adding spaces
- * at the end of text
+ * Appends padding space to some text.
  *
  * @param  {String} text
  * @param  {Number} width - width of column
@@ -76,7 +74,8 @@ function isArray(variable) {
 
 
 /**
- * Parser
+ * Parser.
+ *
  * @constructor
  * @param  {Function} stdout - passed output
  * @return {Parser}
@@ -99,7 +98,8 @@ function Parser(stdout) {
 
 
 /**
- * Adds Name and/or Description to the Parser
+ * Adds Name and/or Description to the Parser.
+ *
  * @param  {String} [name]
  * @param  {String} text
  * @return {Parser} this Parser Instance
@@ -116,7 +116,8 @@ Parser.prototype.description = function description(name, text) {
 
 
 /**
- * Adds Version information
+ * Adds Version information.
+ *
  * @param  {String} versionNum
  * @return {Parser} this Parser instance
  */
@@ -127,7 +128,8 @@ Parser.prototype.version = function version(versionNum) {
 
 
 /**
- * Adds an option/command
+ * Adds an option/command.
+ *
  * @param  {String} [alias]
  * @param  {String} command
  * @param  {String} description
@@ -169,7 +171,8 @@ Parser.prototype.option = function option(alias, command, description, func) {
 
 
 /**
- * Adds the default function to run if no command is specified
+ * Adds the default function to run if no command is specified.
+ *
  * @param  {Function} func
  * @return {Parser} this Parser instance
  */
@@ -182,7 +185,7 @@ Parser.prototype.defaultOption = function defaultOption(func) {
 
 
 /**
- * Add a pre-run function
+ * Add a pre-run function.
  *
  * @param  {Function} func
  * @return {Parser} this Parser instance
@@ -196,7 +199,8 @@ Parser.prototype.prerun = function prerun(func) {
 
 
 /**
- * Adds a bottom epilog
+ * Adds a bottom epilog.
+ *
  * @param  {String} epilog
  * @return {Parser} this Parser instance
  */
@@ -207,8 +211,9 @@ Parser.prototype.epilog = function(epilog) {
 
 
 /**
- * Parses a string for commands
- * @param  {String|Array} commandString
+ * Parses a string for commands.
+ *
+ * @param  {String|Array} cmds - commands/args
  * @return {Parser} this Parser instance
  */
 Parser.prototype.parse = function parse(cmds) {
@@ -249,8 +254,9 @@ Parser.prototype.parse = function parse(cmds) {
 
 
 /**
- * Show help: name, description, options and epilog strings are
- * passed to the output function
+ * Show help information; name, description, options and epilog strings are
+ * passed to the output function.
+ *
  * @return {Parser} this Parser instance
  */
 Parser.prototype.showHelp = function showHelp() {
@@ -276,8 +282,9 @@ Parser.prototype.showHelp = function showHelp() {
 
 
 /**
- * Show version: name and version strings are passed to the output
- * function
+ * Show version information; name and version strings are passed to the
+ * output function.
+ *
  * @return {Parser} this Parser instance
  */
 Parser.prototype.showVersion = function showVersion() {
