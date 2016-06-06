@@ -191,7 +191,7 @@ be ignored. This may be useful for commands __not yet implemented__.
 
 __The MIT License (MIT)__
 
-Copyright (c) 2014-2015 Forfuture LLC <we@forfuture.co.ke>
+Copyright (c) 2014-2016 Forfuture LLC <we@forfuture.co.ke>
 
 
 [argv]:https://github.com/yargs/yargs-parser
