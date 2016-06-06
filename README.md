@@ -3,7 +3,11 @@
 
 > Simple Argument parser for Command-line Applications
 
-[![node](https://img.shields.io/node/v/simple-argparse.svg?style=flat-square)](https://www.npmjs.com/package/simple-argparse) [![npm](https://img.shields.io/npm/v/simple-argparse.svg?style=flat-square)](https://www.npmjs.com/package/simple-argparse) [![Travis](https://img.shields.io/travis/forfutureLLC/node-simple-argparse.svg?style=flat-square)](https://travis-ci.org/forfutureLLC/node-simple-argparse) [![Gemnasium](https://img.shields.io/gemnasium/forfutureLLC/node-simple-argparse.svg?style=flat-square)](https://gemnasium.com/forfutureLLC/node-simple-argparse) [![Coveralls](https://img.shields.io/coveralls/forfutureLLC/node-simple-argparse.svg?style=flat-square)](https://coveralls.io/github/forfutureLLC/node-simple-argparse?branch=master)
+[![node](https://img.shields.io/node/v/simple-argparse.svg?style=flat-square)](https://www.npmjs.com/package/simple-argparse)
+[![npm](https://img.shields.io/npm/v/simple-argparse.svg?style=flat-square)](https://www.npmjs.com/package/simple-argparse)
+[![Travis](https://img.shields.io/travis/forfuturellc/node-simple-argparse.svg?style=flat-square)](https://travis-ci.org/forfuturellc/node-simple-argparse)
+[![Gemnasium](https://img.shields.io/gemnasium/forfuturellc/node-simple-argparse.svg?style=flat-square)](https://gemnasium.com/forfuturellc/node-simple-argparse)
+[![Coveralls](https://img.shields.io/coveralls/forfuturellc/node-simple-argparse.svg?style=flat-square)](https://coveralls.io/github/forfuturellc/node-simple-argparse?branch=master)
 
 
 ## installation
@@ -94,10 +98,10 @@ A `Parser` has these methods:
 
   * __epilog__: a string that will appear at the bottom of the help information
 
-*  __Parser#parse([arguments:String])__
+*  __Parser#parse([arguments:String|Array])__
 
   * __arguments__:(Optional)
-    * a string representing commands as typed in command-line
+    * a string or array representing options, for example, `"name --key=value"`, `["name", "--key=value"]`
     * if left out, `process.argv` will be used instead
 
 * __Parser#showHelp()__
@@ -114,7 +118,7 @@ A `Parser` has these methods:
 ## Parsing
 
 All arguments parsed by `.parse()` are processed using
-[minimist][minimist], and made available to the __option functions__ as
+[yargs-parser][argv], and made available to the __option functions__ as
 their `this` argument.
 
 An __option function__ refers to the function passed to `.option`.
@@ -177,7 +181,7 @@ suite === someSuite
 
 ```
 
-See [minimist][minimist] for more information on the parsing.
+See [yargs-parser][argv] for more information on the parsing.
 
 The __option function__ is optional. If it is left out, the option will
 be ignored. This may be useful for commands __not yet implemented__.
@@ -187,7 +191,7 @@ be ignored. This may be useful for commands __not yet implemented__.
 
 __The MIT License (MIT)__
 
-Copyright (c) 2014-2015 Forfuture LLC <we@forfuture.co.ke>
+Copyright (c) 2014-2016 Forfuture LLC <we@forfuture.co.ke>
 
 
-[minimist]:https://github.com/substack/minimist
+[argv]:https://github.com/yargs/yargs-parser

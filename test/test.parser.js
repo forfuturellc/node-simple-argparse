@@ -255,7 +255,7 @@ describe("Argument parsing", function() {
     });
   });
 
-  it("should parse args passed in .parse(args)", function(done) {
+  it("should parse string 'args' passed in .parse(args)", function(done) {
     var name = "NAME";
     var arg1 = "ARG1";
     var arg2 = "ARG2";
@@ -265,6 +265,18 @@ describe("Argument parsing", function() {
       anotherArg.should.equal(arg2);
       done();
     }).parse([name, arg1, arg2].join(" "));
+  });
+
+  it("should parse array 'args' passed in .parse(args)", function(done) {
+    var name = "NAME";
+    var arg1 = "ARG1";
+    var arg2 = "ARG2";
+    var parser = new Parser(function() {});
+    parser.option(name, "blah", function(someArg, anotherArg) {
+      someArg.should.equal(arg1);
+      anotherArg.should.equal(arg2);
+      done();
+    }).parse([name, arg1, arg2]);
   });
 
   it("should bind a this with the args processed by minimist", function(done) {
